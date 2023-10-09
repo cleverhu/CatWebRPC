@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: js-rpc
-        image: deeplythink/js-rpc:latest
+        image: dockerproxy.com/deeplythink/js-rpc:latest
         ports:
         - containerPort: 5000
 ---
