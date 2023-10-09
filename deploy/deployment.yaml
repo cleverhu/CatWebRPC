@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: js
+  name: js-rpc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: js-rpc
+  template:
+    metadata:
+      labels:
+        app: js-rpc
+    spec:
+      containers:
+      - name: js-rpc
+        image: deeplythink/js-rpc:latest
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: js-rpc
+  namespace: js
+spec:
+  selector:
+    app: js-rpc
+  type: ClusterIP
+  ports:
+  - name: ws
+    protocol: TCP
+    port: 5000
+    targetPort: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: js
+  name: js-rpc
+spec:
+  rules:
+  - host: js-rpc.study-k8s.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: js-rpc
+            port:
+              number: 5000

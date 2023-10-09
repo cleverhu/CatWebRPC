@@ -2,7 +2,7 @@
 //# sourceMappingURL=wampy.min.js.map
 ;;(async()=>{
     try {
-        window.catwampy = new Wampy('ws://127.0.0.1:5000/rpc', { realm: 'catrpc' });
+        window.catwampy = new Wampy('ws://js-rpc.study-k8s.com/rpc', { realm: 'catrpc' });
         //尝试一直重连
         window.catwampy.setOptions({maxRetries:0});
         window.count__ = 0;
