@@ -38,6 +38,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   namespace: js
+  annotations:
+      cert-manager.io/cluster-issuer: zerossl-production
   name: js-rpc
 spec:
   rules:
@@ -51,3 +53,7 @@ spec:
             name: js-rpc
             port:
               number: 5000
+  tls:
+  - hosts:
+    - js-rpc.study-k8s.com
+    secretName: js-rpc-tls

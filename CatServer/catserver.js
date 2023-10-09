@@ -11,7 +11,7 @@ app.use(bodyParser.json())
 const PORT = 5000
 console.error = function(){}
 
-var connection = new autobahn.Connection({ url: 'ws://127.0.0.1:5000/rpc', realm: 'catrpc' });
+var connection = new autobahn.Connection({ url: 'ws://0.0.0.0:5000/rpc', realm: 'catrpc' });
 
 let session = null;
 function GetReturnMsg(code, msg) {
@@ -40,14 +40,14 @@ app.post('/call', async (req, res) => {
 
 
 let httpServer = http.createServer(app)
-httpServer.listen(PORT, "127.0.0.1", async () => {
+httpServer.listen(PORT, "0.0.0.0", async () => {
     session = await (new Promise((s, e) => {
         connection.onopen = function (session) {
             s(session);
         }
         connection.open();
     }))
-    console.log('RPC 服务开启完成 \r\n接口已创建 http://127.0.0.1:5000/call');
+    console.log('RPC 服务开启完成 \r\n接口已创建 http://0.0.0.0:5000/call');
 })
 router = new FoxRouter()
 router.listenWAMP({ server: httpServer, path: "/rpc" })
